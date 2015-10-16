@@ -9,7 +9,7 @@ AMovingObject::AMovingObject()
 {
 	position = GetActorLocation();
 	velocity = FVector(0.0, 0.0, 0.0);
-	acceleration = FVector(0.0001, 0.0, 0.0);
+	acceleration = FVector(0.0, 0.0, 0.001);
 
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
