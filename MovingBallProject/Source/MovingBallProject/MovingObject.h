@@ -33,6 +33,7 @@ public:
 
 	virtual void Move() {
 		updatePosition();
+		SetActorLocation(position);
 	};
 	
 };
