@@ -1,5 +1,4 @@
 # UE4 Project directories to ignore
-/MovingBallProject/
 **/Binaries/
 **/DerivedDataCache/
 **/Intermediate/
