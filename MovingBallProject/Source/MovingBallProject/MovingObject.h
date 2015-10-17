@@ -9,17 +9,18 @@ UCLASS()
 class MOVINGBALLPROJECT_API AMovingObject : public AActor
 {
 	GENERATED_BODY()
-	
-private:
+
 	FVector position;
 	FVector velocity;
 	FVector acceleration;
+	FVector center;
+	float radius;
+	float angle;
+	float dAngle;
 
 protected:
-	virtual void updatePosition() {
-		velocity += acceleration;
-		position += velocity;
-	};
+	virtual void updatePosition();
+	virtual void Move();
 
 public:	
 	// Sets default values for this actor's properties
@@ -30,10 +31,5 @@ public:
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
-
-	virtual void Move() {
-		updatePosition();
-		SetActorLocation(position);
-	};
 	
 };
