@@ -14,7 +14,9 @@ class MOVINGBALLPROJECT_API AMovingObject : public AActor
 	FVector velocity;
 	FVector acceleration;
 	FVector center;
+	int n;
 	float radius;
+	float maxRadius;
 	float angle;
 	float dAngle;
 

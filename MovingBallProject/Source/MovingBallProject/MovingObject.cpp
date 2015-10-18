@@ -6,9 +6,13 @@
 // Sets default values
 AMovingObject::AMovingObject()
 {
-    radius = 100.0f;
+    maxRadius = 400.0f;
+    dAngle = FMath::DegreesToRadians(0.5f);
+    n = 3;
+
     angle = 0.0f;
-	dAngle = FMath::DegreesToRadians(5.0f);
+    radius = maxRadius * FMath::Cos(n * angle);
+
     center = GetActorLocation();
     position = FVector(center.X, (center.Y + radius), center.Z);
     velocity = FVector(0.0f, 0.0f, 0.0f);
@@ -27,6 +31,10 @@ void AMovingObject::BeginPlay()
 void AMovingObject::updatePosition()
 {
     angle = FMath::Fmod((angle + dAngle), (2.0f * PI));
+    if (angle < dAngle) {
+        n = 3 + ((n + 2) % (11 - 3));
+    }
+    radius = maxRadius * FMath::Cos(n * angle);
     velocity.Y = radius * FMath::Cos(angle);
     velocity.Z = radius * FMath::Sin(angle);
     position = center + velocity;
