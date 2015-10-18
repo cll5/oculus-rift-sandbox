@@ -14,9 +14,10 @@ AMovingObject::AMovingObject()
     radius = maxRadius * FMath::Cos(n * angle);
 
     center = GetActorLocation();
-    position = FVector(center.X, (center.Y + radius), center.Z);
     velocity = FVector(0.0f, 0.0f, 0.0f);
     acceleration = FVector(0.0f, 0.0f, 0.0f);
+
+    updatePosition();
 
     // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
     PrimaryActorTick.bCanEverTick = true;
@@ -31,12 +32,12 @@ void AMovingObject::BeginPlay()
 void AMovingObject::updatePosition()
 {
     angle = FMath::Fmod((angle + dAngle), (2.0f * PI));
-    if (angle < dAngle) {
+    if (FMath::IsNearlyZero(angle, dAngle))
+    {
         n = 3 + ((n + 2) % (11 - 3));
     }
     radius = maxRadius * FMath::Cos(n * angle);
-    velocity.Y = radius * FMath::Cos(angle);
-    velocity.Z = radius * FMath::Sin(angle);
+    FMath::PolarToCartesian(radius, angle, velocity.Y, velocity.Z);
     position = center + velocity;
 }
 
