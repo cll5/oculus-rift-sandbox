@@ -31,6 +31,14 @@ void AMovingObject::BeginPlay()
 
 void AMovingObject::updatePosition()
 {
+    /* See https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion#Position_as_a_function_of_time
+    float period = 10.0f;
+    float meanMotion = 2.0f * PI / period;
+    float meanAnomaly = meanMotion * deltaTime;
+    float epsilon = 0.0f;
+    float eccentricAnomaly;
+    */
+
     angle = FMath::Fmod((angle + dAngle), (2.0f * PI));
     if (FMath::IsNearlyZero(angle, dAngle))
     {
@@ -39,6 +47,8 @@ void AMovingObject::updatePosition()
     radius = maxRadius * FMath::Cos(n * angle);
     FMath::PolarToCartesian(radius, angle, velocity.Y, velocity.Z);
     position = center + velocity;
+
+    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Position: <%f, %f, %f>"), position.X, position.Y, position.Z));
 }
 
 void AMovingObject::Move()
