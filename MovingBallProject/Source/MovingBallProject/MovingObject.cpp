@@ -2,6 +2,7 @@
 
 #include "MovingBallProject.h"
 #include "MovingObject.h"
+#include <OculusLibrary/Public/IOculusLibraryPlugin.h>
 
 // Sets default values
 AMovingObject::AMovingObject()
@@ -48,7 +49,11 @@ void AMovingObject::updatePosition()
     FMath::PolarToCartesian(radius, angle, velocity.Y, velocity.Z);
     position = center + velocity;
 
-    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Position: <%f, %f, %f>"), position.X, position.Y, position.Z));
+    FVector a, gyro, magnetometer;
+    float temperature, timeInSeconds;
+    IOculusLibraryPlugin oculus = IOculusLibraryPlugin::Get();
+    oculus.GetRawSensorData(a, gyro, magnetometer, temperature, timeInSeconds);
+    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Position: <%f, %f, %f>"), a.X, a.Y, a.Z));
 }
 
 void AMovingObject::Move()
